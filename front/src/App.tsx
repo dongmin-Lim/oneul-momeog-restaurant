@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import "./App.css";
+import "antd/dist/antd.min.css";
+import { ROUTES } from "./enum/routes";
+import Nav from "./components/Nav";
+import HomePage from "./pages/HomePage";
+import CeoLoginPage from "./ceo/pages/LoginPage";
+import CeoRegisterPage from "./ceo/pages/RegisterPage";
+import MainPage from "./ceo/pages/MainPage";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <Nav />
+      <Routes>
+        <Route path={ROUTES.HOME} element={<HomePage />} />
+        <Route path={ROUTES.CEO.LOGIN} element={<CeoLoginPage />} />
+        <Route path={ROUTES.CEO.REGISTER} element={<CeoRegisterPage />} />
+        <Route path={ROUTES.CEO.MAIN} element={<MainPage />} />
+      </Routes>
+    </Router>
   );
 }
 

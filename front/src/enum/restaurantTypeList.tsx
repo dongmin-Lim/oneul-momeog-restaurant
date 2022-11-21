@@ -1,0 +1,15 @@
+export const restaurantTypeList = [
+  { categoryId: 1, categoryName: "족발, 보쌈" },
+  { categoryId: 2, categoryName: "찜, 탕, 찌개" },
+  { categoryId: 3, categoryName: "돈까스, 회, 일식" },
+  { categoryId: 4, categoryName: "피자" },
+  { categoryId: 5, categoryName: "고기, 구이" },
+  { categoryId: 6, categoryName: "양식" },
+  { categoryId: 7, categoryName: "치킨" },
+  { categoryId: 8, categoryName: "중식" },
+  { categoryId: 9, categoryName: "아시안" },
+  { categoryId: 10, categoryName: "백반, 죽, 국수" },
+  { categoryId: 11, categoryName: "도시락" },
+  { categoryId: 12, categoryName: "분식" },
+  { categoryId: 13, categoryName: "페스트푸드" },
+];
