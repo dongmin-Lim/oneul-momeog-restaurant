@@ -84,6 +84,7 @@ const Receipt = styled.button`
   height: 60px;
   width: 60px;
   border: none;
+  font-weight: bold;
   background-color: green;
   color: white;
 `;
@@ -92,6 +93,7 @@ const Cancel = styled.button`
   height: 60px;
   width: 60px;
   border: none;
+  font-weight: bold;
   background-color: red;
   color: white;
 `;
@@ -101,6 +103,7 @@ const Complete = styled.button`
   width: 60px;
   border: none;
   padding: 0px 10px;
+  font-weight: bold;
   background-color: green;
   color: white;
 `;
@@ -110,6 +113,7 @@ const Delivery = styled.button`
   width: 60px;
   border: none;
   padding: 0px 10px;
+  font-weight: bold;
   background-color: green;
   color: white;
 `;

@@ -7,6 +7,8 @@ import HomePage from "./pages/HomePage";
 import CeoLoginPage from "./ceo/pages/LoginPage";
 import CeoRegisterPage from "./ceo/pages/RegisterPage";
 import MainPage from "./ceo/pages/MainPage";
+import ManagementPage from "./ceo/pages/ManagementPage";
+import MenuPage from "./ceo/pages/MenuPage";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
         <Route path={ROUTES.CEO.LOGIN} element={<CeoLoginPage />} />
         <Route path={ROUTES.CEO.REGISTER} element={<CeoRegisterPage />} />
         <Route path={ROUTES.CEO.MAIN} element={<MainPage />} />
+        <Route path={ROUTES.CEO.MANAGEMENT} element={<ManagementPage />} />
+        <Route path={ROUTES.CEO.MENU} element={<MenuPage />} />
       </Routes>
     </Router>
   );

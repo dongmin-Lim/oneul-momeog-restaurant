@@ -4,5 +4,7 @@ export const ROUTES = {
     LOGIN: "/ceo/login",
     REGISTER: "/ceo/register",
     MAIN: "/ceo/main",
+    MANAGEMENT: "/ceo/management",
+    MENU: "/ceo/menu",
   },
 };
