@@ -17,6 +17,7 @@ function RegisterPage() {
         specificAddress={specificAddress}
         setSpecificAddress={setSpecificAddress}
         zipcode={zipcode}
+        setZipcode={setZipcode}
       />
       {isPopupOpen ? (
         <DaumPost

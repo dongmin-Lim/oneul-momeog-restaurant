@@ -60,7 +60,10 @@ function Nav() {
             )}
 
             {sessionStorage.getItem("jwt") ? (
-              <div>{sessionStorage.getItem("nickname")}</div>
+              <div>
+                {sessionStorage.getItem("restaurantName")}{" "}
+                {sessionStorage.getItem("branch")} 사장님
+              </div>
             ) : (
               <div>
                 <Link to={ROUTES.CEO.LOGIN}>로그인</Link>

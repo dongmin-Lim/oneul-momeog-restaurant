@@ -45,17 +45,21 @@ function Login() {
   });
 
   async function handleLogin() {
-    const response = await axios.post(
-      "http://211.188.65.107:8080/api/auth/ceo/restaurant/login",
-      {
-        email: loginObj.email,
-        password: loginObj.password,
-      }
-    );
+    const response = await axios.post("/api/auth/ceo/restaurant/login", {
+      email: loginObj.email,
+      password: loginObj.password,
+    });
     console.log(response);
     // JWT
-    const jwtToken = response.data.data.jwt;
-    sessionStorage.setItem("userToken", jwtToken);
+    const jwt = response.data.data.jwt;
+    const restaurantName = response.data.data.restaurantName;
+    const branch = response.data.data.branch;
+    sessionStorage.setItem("jwt", jwt);
+    sessionStorage.setItem("restaurantName", restaurantName);
+    sessionStorage.setItem("branch", branch);
+    if (response) {
+      window.location.href = "/ceo/main";
+    }
   }
 
   return (

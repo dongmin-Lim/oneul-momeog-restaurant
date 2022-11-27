@@ -3,78 +3,7 @@ import { Form, Button, Dropdown } from "react-bootstrap";
 import styled from "styled-components";
 import axios from "axios";
 import { restaurantTypeList } from "../../../enum/restaurantTypeList";
-
-const Div = styled.div`
-  z-index: 0;
-  display: relative;
-  width: 600px;
-  margin: 0 auto;
-  margin-top: 5%;
-  border: none;
-  padding: 50px;
-  border-radius: 20px;
-  text-align: center;
-  background-color: #d8f1ff;
-  box-shadow: 2px 2px 6px 0px gray;
-`;
-
-const DropdownWrapper = styled(Dropdown)`
-  width: 300px;
-  margin: 0 auto;
-`;
-
-const FormGroupWrapper = styled(Form.Group)`
-  display: grid;
-  grid-template-rows: 1fr 1fr;
-  width: 300px;
-  margin: 0 auto;
-`;
-
-const GridFormGroupWrapper = styled(Form.Group)`
-  display: grid;
-  grid-template-columns: 190px 100px;
-  grid-column-gap: 10px;
-  width: 300px;
-  margin: 0 auto;
-`;
-
-const FormControlWrapper = styled(Form.Control)`
-  width: 300px;
-  margin: 0 auto;
-  border: 1.5px solid black;
-  background-color: rgba(0, 0, 0, 0);
-`;
-
-const GridFormControlWrapper = styled(Form.Control)`
-  width: relative;
-  margin: 0 auto;
-  border: 1.5px solid black;
-  background-color: rgba(0, 0, 0, 0);
-`;
-
-const ButtonWrapper = styled(Button)`
-  z-index: 1;
-  width: 300px;
-  margin: 0 auto;
-  margin-bottom: 10px;
-`;
-
-const RestaurantTypeDiv = styled.div`
-  width: 300px;
-  height: fit-content;
-  margin: 0 auto;
-`;
-
-const TypeTag = styled.div`
-  display: inline-block;
-  background-color: #0000ff67;
-  width: fit-content;
-  margin: 0 auto;
-  margin: 2px;
-  padding: 5px 10px;
-  color: white;
-  border-radius: 10px;
-`;
+import DaumPost from "../../../components/DaumPost";
 
 interface PasswordProps {
   password: string;
@@ -99,6 +28,7 @@ function Register({
   specificAddress,
   setSpecificAddress,
   zipcode,
+  setZipcode,
 }: any) {
   const [email, setEmail] = useState<string>("");
   const [emailCheckResult, setEmailCheckResult] = useState<string>("");
@@ -114,29 +44,24 @@ function Register({
   const [categories, setCategories] = useState<RestaurantTypeProps[]>([]);
 
   async function data() {
-    const response = await axios.post(
-      "http://211.188.65.107:8080/api/auth/ceo/restaurant/register",
-      {
-        email: email,
-        password: passwordObj.password,
-        passwordCheck: passwordObj.passwordCheck,
-        restaurantName: restaurantObj.restaurantName,
-        branch: restaurantObj.branch,
-        categories: categories,
-        zipcode: zipcode,
-        normalAddress: normalAddress,
-        specificAddress: specificAddress,
-      }
-    );
+    const response = await axios.post("/api/auth/ceo/restaurant/register", {
+      email: email,
+      password: passwordObj.password,
+      passwordCheck: passwordObj.passwordCheck,
+      restaurantName: restaurantObj.restaurantName,
+      branch: restaurantObj.branch,
+      categories: categories,
+      zipcode: zipcode,
+      normalAddress: normalAddress,
+      specificAddress: specificAddress,
+    });
     const result = response;
     console.log(result.data.success);
     result.data.success ? (window.location.href = "/ceo/login") : <></>;
   }
 
   async function EmailCheck() {
-    const response = await axios.get(
-      `http://211.188.65.107:8080/api/auth/ceo/email/check?email=${email}`
-    );
+    const response = await axios.get(`/api/auth/ceo/email/check?email=${email}`);
     const result = response;
 
     setEmailCheckResult(result.data.message);
@@ -241,6 +166,18 @@ function Register({
           <Button variant="outline-success" onClick={() => setIsPopupOpen(!isPopupOpen)}>
             검색
           </Button>
+          {isPopupOpen ? (
+            <ModalBackground onClick={() => setIsPopupOpen(!isPopupOpen)}>
+              <DaumPost
+                isPopupOpen={isPopupOpen}
+                setIsPopupOpen={setIsPopupOpen}
+                setNormalAddress={setNormalAddress}
+                setZipcode={setZipcode}
+              />
+            </ModalBackground>
+          ) : (
+            <></>
+          )}
         </GridFormGroupWrapper>
         <Form.Group className="mb-3" controlId="normalAddress">
           <FormControlWrapper
@@ -264,4 +201,86 @@ function Register({
     </Div>
   );
 }
+const Div = styled.div`
+  z-index: 0;
+  display: relative;
+  width: 600px;
+  margin: 0 auto;
+  margin-top: 5%;
+  border: none;
+  padding: 50px;
+  border-radius: 20px;
+  text-align: center;
+  background-color: #d8f1ff;
+  box-shadow: 2px 2px 6px 0px gray;
+`;
+
+const DropdownWrapper = styled(Dropdown)`
+  width: 300px;
+  margin: 0 auto;
+`;
+
+const FormGroupWrapper = styled(Form.Group)`
+  display: grid;
+  grid-template-rows: 1fr 1fr;
+  width: 300px;
+  margin: 0 auto;
+`;
+
+const GridFormGroupWrapper = styled(Form.Group)`
+  display: grid;
+  grid-template-columns: 190px 100px;
+  grid-column-gap: 10px;
+  width: 300px;
+  margin: 0 auto;
+`;
+
+const FormControlWrapper = styled(Form.Control)`
+  width: 300px;
+  margin: 0 auto;
+  border: 1.5px solid black;
+  background-color: rgba(0, 0, 0, 0);
+`;
+
+const GridFormControlWrapper = styled(Form.Control)`
+  width: relative;
+  margin: 0 auto;
+  border: 1.5px solid black;
+  background-color: rgba(0, 0, 0, 0);
+`;
+
+const ButtonWrapper = styled(Button)`
+  z-index: 1;
+  width: 300px;
+  margin: 0 auto;
+  margin-bottom: 10px;
+`;
+
+const RestaurantTypeDiv = styled.div`
+  width: 300px;
+  height: fit-content;
+  margin: 0 auto;
+`;
+
+const TypeTag = styled.div`
+  display: inline-block;
+  background-color: #0000ff67;
+  width: fit-content;
+  margin: 0 auto;
+  margin: 2px;
+  padding: 5px 10px;
+  color: white;
+  border-radius: 10px;
+`;
+
+const ModalBackground = styled.div`
+  z-index: 100;
+  position: fixed;
+  top: 0%;
+  left: 0%;
+  background-color: rgba(0, 0, 0, 0.2);
+  width: 100%;
+  height: 100%;
+`;
+
 export default Register;
