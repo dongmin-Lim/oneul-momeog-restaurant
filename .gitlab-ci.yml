@@ -1,0 +1,4 @@
+include:
+  - project: oneul_momeog/gitlab-ci
+    ref: main
+    file: .gitlab-ci-frontend_restaurant.yml
