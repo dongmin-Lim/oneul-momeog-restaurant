@@ -45,7 +45,7 @@ function Register({
 
   async function data() {
     const response = await axios.post(
-      "http://175.45.208.84:8080/api/auth/ceo/restaurant/register",
+      "http://localhost:8080/api/auth/ceo/restaurant/register",
       {
         email: email,
         password: passwordObj.password,
@@ -65,7 +65,7 @@ function Register({
 
   async function EmailCheck() {
     const response = await axios.get(
-      `http://175.45.208.84:8080/api/auth/ceo/email/check?email=${email}`
+      `http://localhost:8080/api/auth/ceo/email/check?email=${email}`
     );
     const result = response;
 

@@ -5,30 +5,35 @@ import { receiveProps } from "./Main";
 interface Props {
   status: string;
   Info: receiveProps;
-  currentArr: any;
-  setCurrentArr: any;
-  targetArr: any;
-  setTargetArr: any;
+  receiveArr: any;
+  setReceiveArr: any;
+  deliveryArr: any;
+  setDeliveryArr: any;
+  finishArr: any;
+  setFinishArr: any;
 }
 
 function Card({
   status,
   Info,
-  currentArr,
-  setCurrentArr,
-  targetArr,
-  setTargetArr,
+  receiveArr,
+  setReceiveArr,
+  deliveryArr,
+  setDeliveryArr,
+  finishArr,
+  setFinishArr,
 }: Props) {
   async function statusHandler(mod: string) {
     const response = await axios.patch(
       `/api/ceo/main/restaurant/${Info.restaurantId}/${mod}?roomId=${Info.roomId}`
     );
     console.log(response);
-    setCurrentArr(currentArr.filter((value: any) => value.roomId !== Info.roomId));
-    setTargetArr([
-      ...targetArr,
-      currentArr.filter((value: any) => value.roomId === Info.roomId),
-    ]);
+    console.log(Info);
+    const responseLists = await axios.get(`/api/ceo/main/restaurant/1`);
+    console.log(responseLists.data.data);
+    setReceiveArr(responseLists.data.data.ready); //접수대기
+    setDeliveryArr(responseLists.data.data.receive); //접수완료
+    setFinishArr(responseLists.data.data.delivery);
   }
 
   function ButtonStatus() {
@@ -51,10 +56,8 @@ function Card({
     <Div>
       <Content>
         <Top>
-          {/* <Tag>요청시간 {Info?.readyTime?.toString().split("T")[1]}</Tag>
-          <Tag>결제완료 {Info?.totalPrice?.toLocaleString("ko-KR")}원</Tag> */}
-          <Tag>요청시간 12:00:00</Tag>
-          <Tag>결제완료 12,000원</Tag>
+          <Tag>요청시간 {Info?.readyTime?.toString().split("T")[1]}</Tag>
+          <Tag>결제완료 {Info?.totalPrice?.toLocaleString("ko-KR")}원</Tag>
         </Top>
 
         <Menu>{Info?.exMenu}</Menu>

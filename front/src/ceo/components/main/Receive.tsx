@@ -1,19 +1,28 @@
 import styled from "styled-components";
 import Card from "./Card";
 
-function Receive({ currentArr, setCurrentArr, targetArr, setTargetArr }: any) {
+function Receive({
+  receiveArr,
+  setReceiveArr,
+  deliveryArr,
+  setDeliveryArr,
+  finishArr,
+  setFinishArr,
+}: any) {
   return (
     <Div>
       접수대기
-      {currentArr.map((value: any, index: number) => (
+      {receiveArr.map((value: any, index: number) => (
         <Card
           status="receive"
           Info={value}
           key={index}
-          currentArr={currentArr}
-          setCurrentArr={setCurrentArr}
-          targetArr={targetArr}
-          setTargetArr={setTargetArr}
+          receiveArr={receiveArr}
+          setReceiveArr={setReceiveArr}
+          deliveryArr={deliveryArr}
+          setDeliveryArr={setDeliveryArr}
+          finishArr={finishArr}
+          setFinishArr={setFinishArr}
         />
       ))}
     </Div>

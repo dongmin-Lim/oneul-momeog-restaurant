@@ -17,7 +17,7 @@ export interface receiveProps {
 }
 
 function Main() {
-  const [receiveInfo, setReceiveInfo] = useState<receiveProps>();
+  const [status, setStatus] = useState<boolean>(false);
   const [receiveArr, setReceiveArr] = useState<receiveProps[]>([]);
   const [deliveryArr, setDeliveryArr] = useState<receiveProps[]>([]);
   const [finishArr, setFinishArr] = useState<receiveProps[]>([]);
@@ -30,8 +30,8 @@ function Main() {
     async function statusHandler() {
       const response = await axios.get(`/api/ceo/main/restaurant/1`);
       console.log(response.data.data);
-      setReceiveArr(response.data.data.receive);
-      setDeliveryArr(response.data.data.ready);
+      setReceiveArr(response.data.data.ready);
+      setDeliveryArr(response.data.data.receive);
       setFinishArr(response.data.data.delivery);
     }
     statusHandler();
@@ -40,7 +40,7 @@ function Main() {
   useEffect(() => {
     // EventSource 로 Server Sent Event 를 호출하는 부분
     const eventSource = new EventSourcePolyfill(
-      "http://175.45.208.84:8081/api/ceo/sse/connect",
+      "http://localhost:8081/api/ceo/sse/connect",
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
@@ -84,22 +84,28 @@ function Main() {
   return (
     <Div>
       <Receive
-        currentArr={receiveArr}
-        setCurrentArr={setReceiveArr}
-        targetArr={deliveryArr}
-        setTargetArr={setDeliveryArr}
+        receiveArr={receiveArr}
+        setReceiveArr={setReceiveArr}
+        deliveryArr={deliveryArr}
+        setDeliveryArr={setDeliveryArr}
+        finishArr={finishArr}
+        setFinishArr={setFinishArr}
       />
       <Delivery
-        currentArr={deliveryArr}
-        setCurrentArr={setDeliveryArr}
-        targetArr={finishArr}
-        setTargetArr={setFinishArr}
+        receiveArr={receiveArr}
+        setReceiveArr={setReceiveArr}
+        deliveryArr={deliveryArr}
+        setDeliveryArr={setDeliveryArr}
+        finishArr={finishArr}
+        setFinishArr={setFinishArr}
       />
       <Finish
-        currentArr={finishArr}
-        setCurrentArr={setFinishArr}
-        targetArr={deliveryArr}
-        setTargetArr={setDeliveryArr}
+        receiveArr={receiveArr}
+        setReceiveArr={setReceiveArr}
+        deliveryArr={deliveryArr}
+        setDeliveryArr={setDeliveryArr}
+        finishArr={finishArr}
+        setFinishArr={setFinishArr}
       />
     </Div>
   );
