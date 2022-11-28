@@ -1,50 +1,106 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
-import Complete from "./Complete";
+import Finish from "./Finish";
 import Delivery from "./Delivery";
-import Wait from "./Wait";
-import { EventSourcePolyfill, NativeEventSource } from "event-source-polyfill";
+import Receive from "./Receive";
+import { EventSourcePolyfill } from "event-source-polyfill";
+
+export interface receiveProps {
+  deliveryLocation: string;
+  exMenu: string;
+  readyTime: string;
+  restaurantId: number;
+  roomId: number;
+  status: string;
+  totalPrice: number;
+}
 
 function Main() {
-  // const [reviewInfo, setReviewInfo] = useState();
-  const EventSource = EventSourcePolyfill || NativeEventSource;
+  const [receiveInfo, setReceiveInfo] = useState<receiveProps>();
+  const [receiveArr, setReceiveArr] = useState<receiveProps[]>([]);
+  const [deliveryArr, setDeliveryArr] = useState<receiveProps[]>([]);
+  const [finishArr, setFinishArr] = useState<receiveProps[]>([]);
+
+  useEffect(() => {
+    console.log(deliveryArr);
+  }, [deliveryArr]);
+
+  useEffect(() => {
+    async function statusHandler() {
+      const response = await axios.get(`/api/ceo/main/restaurant/1`);
+      console.log(response.data.data);
+      setReceiveArr(response.data.data.receive);
+      setDeliveryArr(response.data.data.ready);
+      setFinishArr(response.data.data.delivery);
+    }
+    statusHandler();
+  }, []);
 
   useEffect(() => {
     // EventSource 로 Server Sent Event 를 호출하는 부분
-    const eventSource = new EventSource("http://175.45.208.84:8081/api/ceo/sse/connect", {
-      headers: {
-        Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
-      },
-    });
+    const eventSource = new EventSourcePolyfill(
+      "http://175.45.208.84:8081/api/ceo/sse/connect",
+      {
+        headers: {
+          Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
+        },
+        heartbeatTimeout: 120000,
+      }
+    );
+
     console.log(eventSource);
 
-    eventSource.onmessage = (event: any) => {
-      const data = JSON.parse(event.data);
-      console.log(data.message);
-    };
+    eventSource.addEventListener("ready", (e: any) => {
+      const newElement = document.createElement("li");
+      console.log(JSON.parse(e.data));
+      setReceiveArr([...receiveArr, JSON.parse(e.data)]);
+      newElement.textContent = `message: ${e.data}`;
+    });
+
+    eventSource.addEventListener("connect", (e: any) => {
+      const newElement = document.createElement("li");
+      console.log("e.data = ", e.data);
+      newElement.textContent = `message: ${e.data}`;
+    });
 
     eventSource.onopen = function () {
       // 연결 됐을 때
       console.log("connected");
     };
-    eventSource.onerror = function (error: any) {
+
+    eventSource.onerror = function (error) {
       // 에러 났을 때
       console.log("error" + JSON.stringify(error));
     };
-    eventSource.onmessage = function (stream: any) {
+
+    eventSource.onmessage = function (stream) {
       // 메세지 받았을 때
       const parsedData = JSON.parse(stream.data);
       console.log(parsedData);
     };
-    return () => eventSource.close();
   }, []);
 
   return (
     <Div>
-      <Wait />
-      <Complete />
-      <Delivery />
+      <Receive
+        currentArr={receiveArr}
+        setCurrentArr={setReceiveArr}
+        targetArr={deliveryArr}
+        setTargetArr={setDeliveryArr}
+      />
+      <Delivery
+        currentArr={deliveryArr}
+        setCurrentArr={setDeliveryArr}
+        targetArr={finishArr}
+        setTargetArr={setFinishArr}
+      />
+      <Finish
+        currentArr={finishArr}
+        setCurrentArr={setFinishArr}
+        targetArr={deliveryArr}
+        setTargetArr={setDeliveryArr}
+      />
     </Div>
   );
 }

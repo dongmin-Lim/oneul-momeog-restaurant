@@ -1,23 +1,49 @@
+import axios from "axios";
 import styled from "styled-components";
+import { receiveProps } from "./Main";
 
 interface Props {
   status: string;
+  Info: receiveProps;
+  currentArr: any;
+  setCurrentArr: any;
+  targetArr: any;
+  setTargetArr: any;
 }
 
-function Card({ status }: Props) {
+function Card({
+  status,
+  Info,
+  currentArr,
+  setCurrentArr,
+  targetArr,
+  setTargetArr,
+}: Props) {
+  async function statusHandler(mod: string) {
+    const response = await axios.patch(
+      `/api/ceo/main/restaurant/${Info.restaurantId}/${mod}?roomId=${Info.roomId}`
+    );
+    console.log(response);
+    setCurrentArr(currentArr.filter((value: any) => value.roomId !== Info.roomId));
+    setTargetArr([
+      ...targetArr,
+      currentArr.filter((value: any) => value.roomId === Info.roomId),
+    ]);
+  }
+
   function ButtonStatus() {
     switch (status) {
-      case "wait":
+      case "receive":
         return (
           <>
-            <Receipt>접수</Receipt>
-            <Cancel>취소</Cancel>
+            <Receipt onClick={() => statusHandler("receive")}>접수</Receipt>
+            <Cancel onClick={() => statusHandler("cancel")}>취소</Cancel>
           </>
         );
-      case "complete":
-        return <Complete>조리완료</Complete>;
       case "delivery":
-        return <Delivery>배달완료</Delivery>;
+        return <Complete onClick={() => statusHandler("delivery")}>조리완료</Complete>;
+      case "finish":
+        return <Delivery onClick={() => statusHandler("finish")}>배달완료</Delivery>;
     }
   }
 
@@ -25,12 +51,14 @@ function Card({ status }: Props) {
     <Div>
       <Content>
         <Top>
-          <Tag>요청시간 12:00</Tag>
-          <Tag>결제완료 58,000원</Tag>
+          {/* <Tag>요청시간 {Info?.readyTime?.toString().split("T")[1]}</Tag>
+          <Tag>결제완료 {Info?.totalPrice?.toLocaleString("ko-KR")}원</Tag> */}
+          <Tag>요청시간 12:00:00</Tag>
+          <Tag>결제완료 12,000원</Tag>
         </Top>
 
-        <Menu>황금올리브 외 3건</Menu>
-        <Tag style={{ textAlign: "start" }}>관악캠퍼스 919-A동</Tag>
+        <Menu>{Info?.exMenu}</Menu>
+        <Tag style={{ textAlign: "start" }}>{Info?.deliveryLocation}</Tag>
       </Content>
       <ButtonContainer>
         <ButtonStatus />
