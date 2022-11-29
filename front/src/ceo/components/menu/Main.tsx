@@ -17,14 +17,11 @@ function Main() {
   useEffect(() => {
     async function getRestaurantMenus() {
       const response = await axios.get(
-        // `/api/ceo/${sessionStorage.getItem("restaurantId")}/menus/management`
-        `/mockdata/Menus.json`,
-        {
-          baseURL: "",
-        }
+        `/api/ceo/${sessionStorage.getItem("restaurantId")}/menus/management`
+        // `/mockdata/Menus.json`
       );
-      console.log(response.data.fullMenu);
-      setFullMenu(response.data.fullMenu);
+      console.log(response.data.data);
+      setFullMenu(response.data.data);
     }
     getRestaurantMenus();
   }, []);
@@ -52,7 +49,7 @@ function Main() {
       />
       <GroupAdd onClick={() => setGroupModalShow(true)}>그룹 추가</GroupAdd>
       <Accordion>
-        {fullMenu.map((groups: any, index: number) => (
+        {fullMenu?.map((groups: any, index: number) => (
           <Accordion.Item eventKey={index.toString()} key={index}>
             <Accordion.Header>
               {groups.group.groupName}
@@ -66,7 +63,7 @@ function Main() {
                 메뉴 추가
               </MenuAdd>
             </Accordion.Header>
-            {groups.menus.map((menu: any, index: number) => (
+            {groups.menus?.map((menu: any, index: number) => (
               <Accordion.Body key={index}>
                 <div>
                   <img src={menu.menuImg} alt={menu.menuName + "_img"}></img>
