@@ -1,0 +1,56 @@
+{
+    "fullMenu":[
+        {
+            "group": {
+                "groupId":"1",
+                "groupName":"떡볶이"
+            },
+            "menus": [
+                {
+                    "menuId":2,
+                    "menuName":"매운떡볶이",
+                    "description":"매콤한 양념으로 만든 떡볶이",
+                    "price":18000,
+                    "menuImage":"a.img",
+                    "ingredients":"국내산 쌀 100%",
+                    "soldOut":false
+                },
+                {
+                    "menuId":2,
+                    "menuName":"궁중떡볶이",
+                    "description":"달콤한 양념으로 만든 떡볶이",
+                    "price":20000,
+                    "menuImage":"a.img",
+                    "ingredients":"국내산 쌀 100%",
+                    "soldOut":false
+                }
+            ]
+        },
+        {
+            "group": {
+                "groupId":"2",
+                "groupName":"튀김"
+            },
+            "menus": [
+                {
+                    "menuId":1,
+                    "menuName":"오징어튀김",
+                    "description":"동해 오징어로 만든 튀김",
+                    "price":1500,
+                    "menuImage":"a.img",
+                    "ingredients":"국내산 오징어 100%",
+                    "soldOut":false
+                },
+                {
+                    "menuId":2,
+                    "menuName":"김말이",
+                    "description":"남해 김으로 만든 튀김",
+                    "price":2000,
+                    "menuImage":"a.img",
+                    "ingredients":"국내산 김 100%",
+                    "soldOut":false
+                }
+            ]
+        }
+    ]
+}

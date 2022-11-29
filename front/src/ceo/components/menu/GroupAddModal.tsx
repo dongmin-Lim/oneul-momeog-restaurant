@@ -4,14 +4,13 @@ import { Button, Modal } from "react-bootstrap";
 import { Rate } from "antd";
 
 function GroupAddModal(props: any) {
-  const [rating, setRating] = useState<number>();
-  const [content, setContent] = useState<string>("");
+  const [groupName, setGroupName] = useState<string>("");
 
   async function onSubmit() {
     try {
       const response = await axios.post(`/api/ceo/menus/group/add`, {
-        // restaurantId,
-        // groupName,
+        restaurantId: sessionStorage.getItem("restaurantId"),
+        groupName,
       });
       console.log(response);
     } catch (e) {
@@ -24,9 +23,10 @@ function GroupAddModal(props: any) {
         <Modal.Title id="contained-modal-title-vcenter">메뉴그룹 추가</Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <input onChange={(e) => setContent(e.target.value)}></input>
-
-        <Rate />
+        <input
+          placeholder="그룹 명"
+          onChange={(e) => setGroupName(e.target.value)}
+        ></input>
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={onSubmit}>

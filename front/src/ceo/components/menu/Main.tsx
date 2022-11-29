@@ -1,43 +1,86 @@
-import { useState } from "react";
+import axios from "axios";
+import { useState, useEffect } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import styled from "styled-components";
 import GroupAddModal from "./GroupAddModal";
+import MenuAddModal from "./MenuAddModal";
 
 function Main() {
-  const [modalShow, setModalShow] = useState<boolean>(false);
+  const [groupModalShow, setGroupModalShow] = useState<boolean>(false);
+  const [menuModalShow, setMenuModalShow] = useState<boolean>(false);
+  const [fullMenu, setFullMenu] = useState<any>([]);
+  const [groupId, setGroupId] = useState<number>();
+
+  useEffect(() => {
+    async function getRestaurantMenus() {
+      const response = await axios.get(
+        // `/api/ceo/${sessionStorage.getItem("restaurantId")}/menus/management`
+        `/mockdata/Menus.json`,
+        {
+          baseURL: "",
+        }
+      );
+      console.log(response.data.fullMenu);
+      setFullMenu(response.data.fullMenu);
+    }
+    getRestaurantMenus();
+  }, []);
+
+  function soldoutHandler() {}
+
+  function editHandler() {}
+
+  function deleteHandler() {}
 
   return (
     <Div>
       메뉴관리페이지
-      <GroupAddModal
-        // value={value}
-        show={modalShow}
-        onHide={() => setModalShow(false)}
+      <GroupAddModal show={groupModalShow} onHide={() => setGroupModalShow(false)} />
+      <MenuAddModal
+        groupId={groupId}
+        show={menuModalShow}
+        onHide={() => setMenuModalShow(false)}
       />
-      <GroupAdd onClick={() => setModalShow(true)}>그룹 추가</GroupAdd>
+      <GroupAdd onClick={() => setGroupModalShow(true)}>그룹 추가</GroupAdd>
       <Accordion>
-        <Accordion.Item eventKey="0">
-          <Accordion.Header>그룹1</Accordion.Header>
-          <Accordion.Body>메뉴1</Accordion.Body>
-        </Accordion.Item>
-        <Accordion.Item eventKey="1">
-          <Accordion.Header>그룹2</Accordion.Header>
-          <Accordion.Body>메뉴2</Accordion.Body>
-        </Accordion.Item>
+        {fullMenu.map((groups: any, index: number) => (
+          <Accordion.Item eventKey={index.toString()} key={index}>
+            <Accordion.Header>
+              {groups.group.groupName}
+              <MenuAdd
+                onClick={(e) => (
+                  e.stopPropagation(),
+                  setMenuModalShow(true),
+                  setGroupId(groups.group.groupId)
+                )}
+              >
+                메뉴 추가
+              </MenuAdd>
+            </Accordion.Header>
+            {groups.menus.map((menu: any) => (
+              <Accordion.Body>
+                <div>
+                  <img src={menu.menuImg} alt={menu.menuName + "_img"}></img>
+                  {menu.menuName}
+                  {menu.price.toLocaleString("ko-KR")}원
+                  <button onClick={soldoutHandler}>품절</button>
+                  <button onClick={editHandler}>수정</button>
+                  <button onClick={deleteHandler}>삭제</button>
+                </div>
+              </Accordion.Body>
+            ))}
+          </Accordion.Item>
+        ))}
       </Accordion>
     </Div>
   );
 }
 
-const Modal = styled.div`
-  width: 500px;
-  margin: 0 auto;
-`;
-
 const Div = styled.div`
-  width: 1320px;
+  width: 900px;
   margin: 0 auto;
 `;
 
 const GroupAdd = styled.button``;
+const MenuAdd = styled.button``;
 export default Main;
