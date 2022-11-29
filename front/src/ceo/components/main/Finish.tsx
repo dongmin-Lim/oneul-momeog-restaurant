@@ -14,7 +14,7 @@ function Finish({
       배달중
       {finishArr.map((value: any, index: number) => (
         <Card
-          status="delivery"
+          status="finish"
           Info={value}
           key={index}
           receiveArr={receiveArr}
