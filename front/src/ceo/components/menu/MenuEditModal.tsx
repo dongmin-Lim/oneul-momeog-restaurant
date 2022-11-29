@@ -1,13 +1,27 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
-function MenuAddModal(props: any) {
+function MenuEditModal(props: any) {
+  const [menu, setMenu] = useState<any>();
   const [menuName, setGroupName] = useState<string>("");
   const [price, setPrice] = useState<number>();
   const [menuImage, setMenuImage] = useState<any>();
   const [description, setDescription] = useState<string>("");
   const [ingredients, setIngredients] = useState<string>("");
+
+  useEffect(() => {
+    async function getRestaurantMenus() {
+      const response = await axios.get(
+        `/api/ceo/menus/menu/edit?restaurantId=${sessionStorage.getItem(
+          "restaurantId"
+        )}&groupId=${props.groupid}&menuId=${props.menu.menuid}`
+      );
+      console.log(response.data.data);
+      setMenu(response.data.data);
+    }
+    getRestaurantMenus();
+  }, []);
 
   async function onSubmit() {
     // 폼 데이터 생성
@@ -28,7 +42,7 @@ function MenuAddModal(props: any) {
     formData.append("ingredients", ingredients);
 
     try {
-      const response = await axios.post(`/api/ceo/menus/menu/add`, formData, {
+      const response = await axios.put(`/api/ceo/menus/menu/edit`, formData, {
         headers: { "Content-Type": "multipart/form-data", charset: "utf-8" },
       });
       console.log(response);
@@ -47,11 +61,12 @@ function MenuAddModal(props: any) {
   return (
     <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
       <Modal.Header closeButton>
-        <Modal.Title id="contained-modal-title-vcenter">메뉴그룹 추가</Modal.Title>
+        <Modal.Title id="contained-modal-title-vcenter">메뉴 수정</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <input
           placeholder="메뉴이름"
+          // value={menu.menuName}
           onChange={(e) => setGroupName(e.target.value)}
         ></input>
         <input
@@ -75,11 +90,11 @@ function MenuAddModal(props: any) {
       </Modal.Body>
       <Modal.Footer>
         <Button variant="primary" onClick={onSubmit}>
-          추가
+          수정
         </Button>
       </Modal.Footer>
     </Modal>
   );
 }
 
-export default MenuAddModal;
+export default MenuEditModal;

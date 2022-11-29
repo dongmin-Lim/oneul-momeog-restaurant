@@ -2,7 +2,7 @@
     "fullMenu":[
         {
             "group": {
-                "groupId":"1",
+                "groupId":1,
                 "groupName":"떡볶이"
             },
             "menus": [
@@ -28,7 +28,7 @@
         },
         {
             "group": {
-                "groupId":"2",
+                "groupId":2,
                 "groupName":"튀김"
             },
             "menus": [
