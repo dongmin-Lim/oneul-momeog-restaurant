@@ -52,12 +52,12 @@ function Main() {
         {fullMenu?.map((groups: any, index: number) => (
           <Accordion.Item eventKey={index.toString()} key={index}>
             <Accordion.Header>
-              {groups.group.groupName}
+              {groups.groupName}
               <MenuAdd
                 onClick={(e) => (
                   e.stopPropagation(),
                   setMenuAddModalShow(true),
-                  setGroupId(groups.group.groupId)
+                  setGroupId(groups.groupId)
                 )}
               >
                 메뉴 추가
@@ -66,7 +66,10 @@ function Main() {
             {groups.menus?.map((menu: any, index: number) => (
               <Accordion.Body key={index}>
                 <div>
-                  <img src={menu.menuImg} alt={menu.menuName + "_img"}></img>
+                  <img
+                    src={`http://175.45.208.84:8080/api/image?imageUrl=${menu.menuImage}`}
+                    alt={menu.menuName + "_img"}
+                  ></img>
                   {menu.menuName}
                   {menu.price.toLocaleString("ko-KR")}원
                   <button onClick={soldoutHandler}>품절</button>
