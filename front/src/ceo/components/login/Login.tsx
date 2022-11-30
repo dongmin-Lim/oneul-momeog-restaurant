@@ -64,8 +64,10 @@ function Login() {
     sessionStorage.setItem("branch", branch);
     sessionStorage.setItem("restaurantId", restaurantId);
     sessionStorage.setItem("open", open);
-    if (response) {
+    if (response.data.success) {
       window.location.href = "/ceo/main";
+    } else if (!response.data.success) {
+      console.log(response.data.message);
     }
   }
 

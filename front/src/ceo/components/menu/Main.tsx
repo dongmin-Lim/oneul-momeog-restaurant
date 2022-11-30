@@ -55,7 +55,6 @@ function Main() {
 
   return (
     <Div>
-      메뉴관리페이지
       <GroupAddModal show={groupModalShow} onHide={() => setGroupModalShow(false)} />
       <MenuAddModal
         groupid={groupId}
@@ -87,35 +86,39 @@ function Main() {
             </Accordion.Header>
             {groups.menus?.map((menu: any, index: number) => (
               <Accordion.Body key={index}>
-                <div>
-                  <img
-                    src={`http://175.45.208.84:8080/api/image?imageUrl=${menu.menuImage}`}
-                    alt={menu.menuName + "_img"}
-                  ></img>
-                  {menu.menuName}
-                  {menu.price.toLocaleString("ko-KR")}원 현재상태 {menu.soldOut}
-                  <button
-                    onClick={() =>
-                      soldoutHandler(groups.groupId, menu.menuId, menu.soldOut)
-                    }
-                  >
-                    판매/품절
-                  </button>
-                  <button
-                    onClick={(e) => (
-                      e.stopPropagation(),
-                      setMenuEditModalShow(true),
-                      setGroupId(groups.groupId),
-                      setMenuId(menu.menuId),
-                      getRestaurantMenus(groups.groupId, menu.menuId)
-                    )}
-                  >
-                    수정
-                  </button>
-                  <button onClick={() => deleteHandler(groups.groupId, menu.menuId)}>
-                    삭제
-                  </button>
-                </div>
+                <Container>
+                  <Content>
+                    <Img
+                      src={`http://175.45.208.84:8080/api/image?imageUrl=${menu.menuImage}`}
+                      alt={menu.menuName + "_img"}
+                    ></Img>
+                    {menu.menuName}
+                    {menu.price.toLocaleString("ko-KR")}원 현재상태 {menu.soldOut}
+                  </Content>
+                  <ButtonContent>
+                    <button
+                      onClick={() =>
+                        soldoutHandler(groups.groupId, menu.menuId, menu.soldOut)
+                      }
+                    >
+                      판매/품절
+                    </button>
+                    <button
+                      onClick={(e) => (
+                        e.stopPropagation(),
+                        setMenuEditModalShow(true),
+                        setGroupId(groups.groupId),
+                        setMenuId(menu.menuId),
+                        getRestaurantMenus(groups.groupId, menu.menuId)
+                      )}
+                    >
+                      수정
+                    </button>
+                    <button onClick={() => deleteHandler(groups.groupId, menu.menuId)}>
+                      삭제
+                    </button>
+                  </ButtonContent>
+                </Container>
               </Accordion.Body>
             ))}
           </Accordion.Item>
@@ -130,6 +133,22 @@ const Div = styled.div`
   margin: 0 auto;
 `;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const Content = styled.div``;
+
+const ButtonContent = styled.div``;
+
 const GroupAdd = styled.button``;
 const MenuAdd = styled.button``;
+const Img = styled.img`
+  width: 100px;
+  height: 100px;
+`;
+
 export default Main;

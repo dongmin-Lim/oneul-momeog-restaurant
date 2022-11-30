@@ -7,7 +7,7 @@ import axios from "axios";
 
 function Nav() {
   const [openState, setOpenState] = useState<boolean>(
-    JSON.parse(sessionStorage.getItem("open"))
+    JSON.parse(sessionStorage.getItem("open")) || false
   );
 
   function LogOutHandler() {
@@ -19,18 +19,20 @@ function Nav() {
     window.location.replace(ROUTES.CEO.LOGIN);
   }
 
-  async function openHandler() {
-    try {
-      const response = await axios.patch(`/api/ceo/open`, {
-        open: !openState,
-      });
-      setOpenState(response.data.data);
-      console.log(response.data.data);
-      sessionStorage.setItem("open", JSON.stringify(!openState));
-    } catch (e) {
-      console.log(e);
+  useEffect(() => {
+    async function openHandler() {
+      try {
+        const response = await axios.patch(`/api/ceo/open`, {
+          open: openState,
+        });
+        sessionStorage.setItem("open", JSON.stringify(!openState));
+        console.log(response.data.data);
+      } catch (e) {
+        console.log(e);
+      }
     }
-  }
+    openHandler();
+  }, [openState]);
   return (
     <Div>
       <NavDiv>
@@ -47,9 +49,9 @@ function Nav() {
           <NavList>
             {sessionStorage.getItem("jwt") ? (
               openState ? (
-                <div onClick={openHandler}>영업중</div>
+                <div onClick={() => setOpenState(false)}>영업중 🟢</div>
               ) : (
-                <div onClick={openHandler}>영업종료</div>
+                <div onClick={() => setOpenState(true)}>영업종료 🔴</div>
               )
             ) : (
               <div></div>
@@ -62,12 +64,19 @@ function Nav() {
             ) : (
               <div></div>
             )}
-            <div>
-              <Link to={ROUTES.CEO.MANAGEMENT}>매장관리</Link>
-            </div>
-            <div>
-              <Link to={ROUTES.CEO.MENU}>메뉴관리</Link>
-            </div>
+            {sessionStorage.getItem("jwt") ? (
+              <>
+                <div>
+                  <Link to={ROUTES.CEO.MANAGEMENT}>매장관리</Link>
+                </div>
+                <div>
+                  <Link to={ROUTES.CEO.MENU}>메뉴관리</Link>
+                </div>
+              </>
+            ) : (
+              <div></div>
+            )}
+
             {sessionStorage.getItem("jwt") ? (
               <div onClick={LogOutHandler}>로그아웃</div>
             ) : (
