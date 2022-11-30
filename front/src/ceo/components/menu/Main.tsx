@@ -89,10 +89,7 @@ function Main() {
               <Accordion.Body key={index}>
                 <Container>
                   <Content>
-                    <Img
-                      src={`http://springboot-user-svc:8080/api/image?imageUrl=${menu.menuImage}`}
-                      alt={menu.menuName + "_img"}
-                    ></Img>
+                    <Img src="../data/img/menu.png" alt={menu.menuName + "_img"}></Img>
                     {menu.menuName}
                     {menu.price.toLocaleString("ko-KR")}원 현재상태 {menu.soldOut}
                   </Content>
