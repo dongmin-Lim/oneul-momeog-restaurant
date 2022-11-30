@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
@@ -9,15 +10,7 @@ const Div = styled.div`
 `;
 
 function HomePage() {
-  return (
-    <Div>
-      <Button variant="success" className="m-2">
-        오늘모먹
-      </Button>
-      <Link to={ROUTES.CEO.LOGIN}>
-        <Button variant="primary">사장님</Button>
-      </Link>
-    </Div>
-  );
+  useEffect(() => window.location.replace(ROUTES.CEO.LOGIN), []);
+  return <Div></Div>;
 }
 export default HomePage;

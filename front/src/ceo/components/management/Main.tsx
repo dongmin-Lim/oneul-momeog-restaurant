@@ -10,7 +10,7 @@ function Main() {
   useEffect(() => {
     async function getManagementData() {
       const response = await axios.get(
-        `http://springboot-websocket-svc:8081/api/ceo/${sessionStorage.getItem(
+        `http://198.19.242.196:8081/api/ceo/${sessionStorage.getItem(
           "restaurantId"
         )}/management`
       );

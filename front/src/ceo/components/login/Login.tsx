@@ -46,7 +46,7 @@ function Login() {
 
   async function handleLogin() {
     const response = await axios.post(
-      "http://springboot-user-svc:8080/api/auth/ceo/restaurant/login",
+      "http://198.19.185.198:8080/api/auth/ceo/restaurant/login",
       {
         email: loginObj.email,
         password: loginObj.password,
