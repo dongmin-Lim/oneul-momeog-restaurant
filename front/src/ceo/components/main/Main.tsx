@@ -28,8 +28,10 @@ function Main() {
 
   useEffect(() => {
     async function statusHandler() {
-      const response = await axios.get(`/api/ceo/main/restaurant/1`);
-      console.log(response.data.data);
+      const response = await axios.get(
+        `/api/ceo/main/restaurant/${sessionStorage.getItem("restaurantId")}`
+      );
+      console.log(response.data);
       setReceiveArr(response.data.data.ready);
       setDeliveryArr(response.data.data.receive);
       setFinishArr(response.data.data.delivery);

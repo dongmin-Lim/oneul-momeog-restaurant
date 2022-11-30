@@ -58,10 +58,12 @@ function Login() {
     const restaurantName = response.data.data.restaurantName;
     const branch = response.data.data.branch;
     const restaurantId = response.data.data.restaurantId;
+    const open = response.data.data.open;
     sessionStorage.setItem("jwt", jwt);
     sessionStorage.setItem("restaurantName", restaurantName);
     sessionStorage.setItem("branch", branch);
     sessionStorage.setItem("restaurantId", restaurantId);
+    sessionStorage.setItem("open", open);
     if (response) {
       window.location.href = "/ceo/main";
     }

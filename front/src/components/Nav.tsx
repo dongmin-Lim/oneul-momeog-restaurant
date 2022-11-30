@@ -6,26 +6,31 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 function Nav() {
-  const [openState, setOpenState] = useState<boolean>(false);
+  const [openState, setOpenState] = useState<boolean>(
+    JSON.parse(sessionStorage.getItem("open"))
+  );
 
   function LogOutHandler() {
     sessionStorage.removeItem("jwt");
     sessionStorage.removeItem("restaurantName");
     sessionStorage.removeItem("branch");
+    sessionStorage.removeItem("restaurantId");
+    sessionStorage.removeItem("open");
     window.location.replace(ROUTES.CEO.LOGIN);
   }
 
-  // async function openHandler() {
-  //   try {
-  //     const response = await axios.patch(`/api/ceo/open`, {
-  //       open: openState,
-  //     });
-  //     setOpenState(response.data.data);
-  //     console.log(response.data.data);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // }
+  async function openHandler() {
+    try {
+      const response = await axios.patch(`/api/ceo/open`, {
+        open: !openState,
+      });
+      setOpenState(response.data.data);
+      console.log(response.data.data);
+      sessionStorage.setItem("open", JSON.stringify(!openState));
+    } catch (e) {
+      console.log(e);
+    }
+  }
   return (
     <Div>
       <NavDiv>
@@ -40,7 +45,15 @@ function Nav() {
             </Link>
           )}
           <NavList>
-            {sessionStorage.getItem("jwt") ? <div>영업종료</div> : <div></div>}
+            {sessionStorage.getItem("jwt") ? (
+              openState ? (
+                <div onClick={openHandler}>영업중</div>
+              ) : (
+                <div onClick={openHandler}>영업종료</div>
+              )
+            ) : (
+              <div></div>
+            )}
             {sessionStorage.getItem("jwt") ? (
               <b>
                 {sessionStorage.getItem("restaurantName")}{" "}

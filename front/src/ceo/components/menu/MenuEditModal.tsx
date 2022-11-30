@@ -1,24 +1,23 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 
 function MenuEditModal(props: any) {
-  const [menu, setMenu] = useState<any>();
-  const [menuName, setGroupName] = useState<string>("");
-  const [price, setPrice] = useState<number>();
+  const [menuName, setGroupName] = useState<string>(props.menu?.menuName);
+  const [price, setPrice] = useState<number>(props.menu?.price);
   const [menuImage, setMenuImage] = useState<any>();
-  const [description, setDescription] = useState<string>("");
-  const [ingredients, setIngredients] = useState<string>("");
+  const [description, setDescription] = useState<string>(props.menu?.description);
+  const [ingredients, setIngredients] = useState<string>(props.menu?.ingredients);
 
   useEffect(() => {
     async function getRestaurantMenus() {
       const response = await axios.get(
         `/api/ceo/menus/menu/edit?restaurantId=${sessionStorage.getItem(
           "restaurantId"
-        )}&groupId=${props.groupid}&menuId=${props.menu.menuid}`
+        )}&groupId=${props.groupid}&menuId=${props.menuid}`
       );
       console.log(response.data.data);
-      setMenu(response.data.data);
+      // setMenu(response.data.data);
     }
     getRestaurantMenus();
   }, []);
@@ -36,6 +35,7 @@ function MenuEditModal(props: any) {
     // Object를 보내기 위해서는 JSON 형식으로 보낸다.(현재는 미적용)
     formData.append("restaurantId", sessionStorage.getItem("restaurantId"));
     formData.append("groupId", props.groupid);
+    formData.append("menuId", props.menuid);
     formData.append("menuName", menuName);
     formData.append("description", description);
     formData.append("price", price.toString());
@@ -66,11 +66,12 @@ function MenuEditModal(props: any) {
       <Modal.Body>
         <input
           placeholder="메뉴이름"
-          // value={menu.menuName}
+          value={menuName}
           onChange={(e) => setGroupName(e.target.value)}
         ></input>
         <input
           placeholder="가격"
+          value={price}
           onChange={(e) => setPrice(parseInt(e.target.value))}
         ></input>
         <input
@@ -81,10 +82,12 @@ function MenuEditModal(props: any) {
         />
         <input
           placeholder="메뉴설명"
+          value={description}
           onChange={(e) => setDescription(e.target.value)}
         ></input>
         <input
           placeholder="성분"
+          value={ingredients}
           onChange={(e) => setIngredients(e.target.value)}
         ></input>
       </Modal.Body>

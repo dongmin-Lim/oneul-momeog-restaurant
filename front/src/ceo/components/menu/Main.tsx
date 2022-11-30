@@ -7,18 +7,18 @@ import MenuAddModal from "./MenuAddModal";
 import MenuEditModal from "./MenuEditModal";
 
 function Main() {
+  const [menu, setMenu] = useState<any>();
   const [groupModalShow, setGroupModalShow] = useState<boolean>(false);
   const [menuAddModalShow, setMenuAddModalShow] = useState<boolean>(false);
   const [menuEditModalShow, setMenuEditModalShow] = useState<boolean>(false);
   const [fullMenu, setFullMenu] = useState<any>([]);
   const [groupId, setGroupId] = useState<number>();
-  const [menuId, setMenuId] = useState<any>();
+  const [menuId, setMenuId] = useState<number>();
 
   useEffect(() => {
     async function getRestaurantMenus() {
       const response = await axios.get(
         `/api/ceo/${sessionStorage.getItem("restaurantId")}/menus/management`
-        // `/mockdata/Menus.json`
       );
       console.log(response.data.data);
       setFullMenu(response.data.data);
@@ -26,11 +26,32 @@ function Main() {
     getRestaurantMenus();
   }, []);
 
-  function soldoutHandler() {}
+  async function getRestaurantMenus(groupId: number, menuId: number) {
+    const response = await axios.get(
+      `/api/ceo/menus/menu/edit?restaurantId=${sessionStorage.getItem(
+        "restaurantId"
+      )}&groupId=${groupId}&menuId=${menuId}`
+    );
+    console.log(response.data.data);
+    setMenu(response.data.data);
+  }
 
-  function editHandler() {}
+  async function soldoutHandler(groupId: number, menuId: number, soldOut: boolean) {
+    const response = await axios.patch(`/api/ceo/menus/menu/sold-out/edit`, {
+      restaurantId: sessionStorage.getItem("restaurantId"),
+      groupId,
+      menuId,
+      soldOut: !soldOut,
+    });
+  }
 
-  function deleteHandler() {}
+  async function deleteHandler(groupId: number, menuId: number) {
+    const response = await axios.delete(
+      `/api/ceo/menus/menu/delete?menuId=${menuId}&groupId=${groupId}`
+    );
+    console.log(response.data.data);
+    // setFullMenu(response.data.data);
+  }
 
   return (
     <Div>
@@ -42,6 +63,7 @@ function Main() {
         onHide={() => setMenuAddModalShow(false)}
       />
       <MenuEditModal
+        menu={menu}
         menuid={menuId}
         groupid={groupId}
         show={menuEditModalShow}
@@ -71,19 +93,28 @@ function Main() {
                     alt={menu.menuName + "_img"}
                   ></img>
                   {menu.menuName}
-                  {menu.price.toLocaleString("ko-KR")}원
-                  <button onClick={soldoutHandler}>품절</button>
+                  {menu.price.toLocaleString("ko-KR")}원 현재상태 {menu.soldOut}
+                  <button
+                    onClick={() =>
+                      soldoutHandler(groups.groupId, menu.menuId, menu.soldOut)
+                    }
+                  >
+                    판매/품절
+                  </button>
                   <button
                     onClick={(e) => (
-                      editHandler(),
                       e.stopPropagation(),
                       setMenuEditModalShow(true),
-                      setMenuId(menu.menuId)
+                      setGroupId(groups.groupId),
+                      setMenuId(menu.menuId),
+                      getRestaurantMenus(groups.groupId, menu.menuId)
                     )}
                   >
                     수정
                   </button>
-                  <button onClick={deleteHandler}>삭제</button>
+                  <button onClick={() => deleteHandler(groups.groupId, menu.menuId)}>
+                    삭제
+                  </button>
                 </div>
               </Accordion.Body>
             ))}
