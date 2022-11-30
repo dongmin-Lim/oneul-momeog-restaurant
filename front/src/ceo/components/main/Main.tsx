@@ -42,7 +42,7 @@ function Main() {
   useEffect(() => {
     // EventSource 로 Server Sent Event 를 호출하는 부분
     const eventSource = new EventSourcePolyfill(
-      "http://198.19.242.196:8081/api/ceo/sse/connect",
+      "http://localhost:8081/api/ceo/sse/connect",
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
