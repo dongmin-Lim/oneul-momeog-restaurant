@@ -42,7 +42,7 @@ function Main() {
   useEffect(() => {
     // EventSource 로 Server Sent Event 를 호출하는 부분
     const eventSource = new EventSourcePolyfill(
-      "http://175.45.208.84:8081/api/ceo/sse/connect",
+      "http://springboot-websocket-svc:8081/api/ceo/sse/connect",
       {
         headers: {
           Authorization: `Bearer ${sessionStorage.getItem("jwt")}`,
@@ -120,6 +120,7 @@ const Div = styled.div`
   width: 1320px;
   text-align: center;
   margin: 0 auto;
+  margin-top: 20px;
 `;
 
 export default Main;

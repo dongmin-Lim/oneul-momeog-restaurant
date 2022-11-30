@@ -55,6 +55,7 @@ function Main() {
 
   return (
     <Div>
+      <h2>메뉴관리 페이지</h2>
       <GroupAddModal show={groupModalShow} onHide={() => setGroupModalShow(false)} />
       <MenuAddModal
         groupid={groupId}
@@ -72,8 +73,8 @@ function Main() {
       <Accordion>
         {fullMenu?.map((groups: any, index: number) => (
           <Accordion.Item eventKey={index.toString()} key={index}>
-            <Accordion.Header>
-              {groups.groupName}
+            <AccordionHeaderWrapper>
+              <div>{groups.groupName}</div>
               <MenuAdd
                 onClick={(e) => (
                   e.stopPropagation(),
@@ -83,27 +84,27 @@ function Main() {
               >
                 메뉴 추가
               </MenuAdd>
-            </Accordion.Header>
+            </AccordionHeaderWrapper>
             {groups.menus?.map((menu: any, index: number) => (
               <Accordion.Body key={index}>
                 <Container>
                   <Content>
                     <Img
-                      src={`http://175.45.208.84:8080/api/image?imageUrl=${menu.menuImage}`}
+                      src={`http://springboot-user-svc:8080/api/image?imageUrl=${menu.menuImage}`}
                       alt={menu.menuName + "_img"}
                     ></Img>
                     {menu.menuName}
                     {menu.price.toLocaleString("ko-KR")}원 현재상태 {menu.soldOut}
                   </Content>
                   <ButtonContent>
-                    <button
+                    <MenuAdd
                       onClick={() =>
                         soldoutHandler(groups.groupId, menu.menuId, menu.soldOut)
                       }
                     >
                       판매/품절
-                    </button>
-                    <button
+                    </MenuAdd>
+                    <MenuAdd
                       onClick={(e) => (
                         e.stopPropagation(),
                         setMenuEditModalShow(true),
@@ -113,10 +114,10 @@ function Main() {
                       )}
                     >
                       수정
-                    </button>
-                    <button onClick={() => deleteHandler(groups.groupId, menu.menuId)}>
+                    </MenuAdd>
+                    <MenuAdd onClick={() => deleteHandler(groups.groupId, menu.menuId)}>
                       삭제
-                    </button>
+                    </MenuAdd>
                   </ButtonContent>
                 </Container>
               </Accordion.Body>
@@ -131,6 +132,7 @@ function Main() {
 const Div = styled.div`
   width: 900px;
   margin: 0 auto;
+  margin-top: 20px;
 `;
 
 const Container = styled.div`
@@ -144,8 +146,36 @@ const Content = styled.div``;
 
 const ButtonContent = styled.div``;
 
-const GroupAdd = styled.button``;
-const MenuAdd = styled.button``;
+const AccordionHeaderWrapper = styled(Accordion.Header)`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const MenuAdd = styled.button`
+  padding: 5px 10px;
+  margin-left: 10px;
+  border: 1.5px solid black;
+  border-radius: 10px;
+  background-color: rgba(0, 0, 0, 0);
+  color: black;
+  :hover {
+    background-color: #afdaff;
+  }
+`;
+
+const GroupAdd = styled.button`
+  padding: 5px 10px;
+  margin: 10px 0px;
+  border: 1.5px solid black;
+  border-radius: 10px;
+  background-color: white;
+  :hover {
+    background-color: aliceblue;
+  }
+`;
+
 const Img = styled.img`
   width: 100px;
   height: 100px;
