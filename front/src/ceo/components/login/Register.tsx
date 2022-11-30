@@ -67,9 +67,7 @@ function Register({
     const response = await axios.get(
       `http://198.19.185.198:8080/api/auth/ceo/email/check?email=${email}`
     );
-    const result = response;
-
-    setEmailCheckResult(result.data.message);
+    setEmailCheckResult(response.data.message);
   }
 
   return (
