@@ -40,9 +40,8 @@ function Main() {
       <Container>
         <Header>
           <Title>공지</Title>
-          <ButtonWrapper onClick={onEdit}>수정하기</ButtonWrapper>
+          <div>최대 100자</div>
         </Header>
-        최대 100자
         <TextAreaWrapper
           maxLength={100}
           onChange={(e) => setNotice(e.target.value)}
@@ -52,9 +51,8 @@ function Main() {
       <Container>
         <Header>
           <Title>한마디</Title>
-          <ButtonWrapper onClick={onEdit}>수정하기</ButtonWrapper>
+          <div>최대 100자</div>
         </Header>
-        최대 100자
         <TextAreaWrapper
           maxLength={100}
           onChange={(e) => setEvent(e.target.value)}
@@ -64,7 +62,6 @@ function Main() {
       <Container>
         <Header>
           <Title>원산지 정보</Title>
-          <ButtonWrapper onClick={onEdit}>수정하기</ButtonWrapper>
         </Header>
         최대 100자
         <TextAreaWrapper
@@ -72,6 +69,9 @@ function Main() {
           onChange={(e) => setIngredientOrigin(e.target.value)}
           value={ingredientOrigin}
         ></TextAreaWrapper>
+      </Container>
+      <Container>
+        <ButtonWrapper onClick={onEdit}>수정하기</ButtonWrapper>
       </Container>
     </Div>
   );
@@ -88,13 +88,15 @@ const Div = styled.div`
 
 const Header = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
 `;
 
 const Title = styled.h3``;
+
 const ButtonWrapper = styled.button`
+  width: 200px;
   padding: 5px 10px;
   margin-left: 10px;
   border: 1.5px solid black;

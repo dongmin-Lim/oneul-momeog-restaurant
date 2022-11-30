@@ -16,6 +16,7 @@ function GroupAddModal(props: any) {
     } catch (e) {
       console.log(e);
     }
+    props.setGroupModalShow(false);
   }
   return (
     <Modal {...props} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
