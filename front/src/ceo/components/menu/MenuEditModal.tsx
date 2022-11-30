@@ -49,7 +49,7 @@ function MenuEditModal(props: any) {
     } catch (e) {
       console.log(e);
     }
-    props.setMenuModalShow(false);
+    props.setEditModalShow(false);
   }
 
   // form-data에 이미지 전송을 위한 변수저장

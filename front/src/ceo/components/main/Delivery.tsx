@@ -11,7 +11,7 @@ function Delivery({
 }: any) {
   return (
     <Div>
-      접수완료
+      <h2>접수완료</h2>
       {deliveryArr.map((value: any, index: number) => (
         <Card
           status="delivery"

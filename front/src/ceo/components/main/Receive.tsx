@@ -11,7 +11,7 @@ function Receive({
 }: any) {
   return (
     <Div>
-      접수대기
+      <h2>접수대기</h2>
       {receiveArr.map((value: any, index: number) => (
         <Card
           status="receive"

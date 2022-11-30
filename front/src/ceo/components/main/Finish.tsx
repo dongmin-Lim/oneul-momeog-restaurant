@@ -11,7 +11,7 @@ function Finish({
 }: any) {
   return (
     <Div>
-      배달중
+      <h2>배달중</h2>
       {finishArr.map((value: any, index: number) => (
         <Card
           status="finish"

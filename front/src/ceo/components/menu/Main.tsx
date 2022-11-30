@@ -56,10 +56,15 @@ function Main() {
   return (
     <Div>
       <h2>메뉴관리 페이지</h2>
-      <GroupAddModal show={groupModalShow} onHide={() => setGroupModalShow(false)} />
+      <GroupAddModal
+        show={groupModalShow}
+        setGroupModalShow={setGroupModalShow}
+        onHide={() => setGroupModalShow(false)}
+      />
       <MenuAddModal
         groupid={groupId}
         show={menuAddModalShow}
+        setMenuAddModalShow={setMenuAddModalShow}
         onHide={() => setMenuAddModalShow(false)}
       />
       <MenuEditModal
@@ -67,6 +72,7 @@ function Main() {
         menuid={menuId}
         groupid={groupId}
         show={menuEditModalShow}
+        setMenuEditModalShow={setMenuEditModalShow}
         onHide={() => setMenuEditModalShow(false)}
       />
       <GroupAdd onClick={() => setGroupModalShow(true)}>그룹 추가</GroupAdd>
