@@ -44,29 +44,24 @@ function Register({
   const [categories, setCategories] = useState<RestaurantTypeProps[]>([]);
 
   async function data() {
-    const response = await axios.post(
-      "http://localhost:8080/api/auth/ceo/restaurant/register",
-      {
-        email: email,
-        password: passwordObj.password,
-        passwordCheck: passwordObj.passwordCheck,
-        restaurantName: restaurantObj.restaurantName,
-        branch: restaurantObj.branch,
-        categories: categories,
-        zipcode: zipcode,
-        normalAddress: normalAddress,
-        specificAddress: specificAddress,
-      }
-    );
+    const response = await axios.post("/api/auth/ceo/restaurant/register", {
+      email: email,
+      password: passwordObj.password,
+      passwordCheck: passwordObj.passwordCheck,
+      restaurantName: restaurantObj.restaurantName,
+      branch: restaurantObj.branch,
+      categories: categories,
+      zipcode: zipcode,
+      normalAddress: normalAddress,
+      specificAddress: specificAddress,
+    });
     const result = response;
     console.log(result.data.success);
     result.data.success ? (window.location.href = "/ceo/login") : <></>;
   }
 
   async function EmailCheck() {
-    const response = await axios.get(
-      `http://localhost:8080/api/auth/ceo/email/check?email=${email}`
-    );
+    const response = await axios.get(`/api/auth/ceo/email/check?email=${email}`);
     setEmailCheckResult(response.data.message);
   }
 

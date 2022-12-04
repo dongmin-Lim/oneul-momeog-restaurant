@@ -45,13 +45,10 @@ function Login() {
   });
 
   async function handleLogin() {
-    const response = await axios.post(
-      "http://localhost:8080/api/auth/ceo/restaurant/login",
-      {
-        email: loginObj.email,
-        password: loginObj.password,
-      }
-    );
+    const response = await axios.post("/api/auth/ceo/restaurant/login", {
+      email: loginObj.email,
+      password: loginObj.password,
+    });
     console.log(response);
     // JWT
     const jwt = response.data.data.jwt;

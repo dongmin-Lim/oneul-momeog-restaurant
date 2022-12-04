@@ -10,7 +10,7 @@ function Main() {
   useEffect(() => {
     async function getManagementData() {
       const response = await axios.get(
-        `http://localhost:8081/api/ceo/${sessionStorage.getItem(
+        `http://dev.momeog.shop:8081/api/ceo/${sessionStorage.getItem(
           "restaurantId"
         )}/management`
       );

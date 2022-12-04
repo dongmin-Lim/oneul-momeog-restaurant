@@ -5,7 +5,8 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.css";
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:8081";
+axios.defaults.baseURL = "http://dev.momeog.shop:8081";
+
 axios.defaults.headers.common["Authorization"] = `Bearer ${sessionStorage.getItem(
   "jwt"
 )}`;
