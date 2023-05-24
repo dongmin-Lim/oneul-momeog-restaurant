@@ -1,6 +1,5 @@
 ## 공동주문을 통한 배달비절약 플랫폼 “오늘모먹”
 
-![logo.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3512aa2a-85db-4dc8-ac02-6d2e324803b8/logo.png)
 
 **오늘모먹**은 웹페이지 사용자들의 공동주문을 통해 배달비를 1/n으로 절약할 수 있는 서비스입니다.
 
