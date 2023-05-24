@@ -1,46 +1,132 @@
-# Getting Started with Create React App
+## 공동주문을 통한 배달비절약 플랫폼 “오늘모먹”
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+![logo.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3512aa2a-85db-4dc8-ac02-6d2e324803b8/logo.png)
 
-## Available Scripts
+**오늘모먹**은 웹페이지 사용자들의 공동주문을 통해 배달비를 1/n으로 절약할 수 있는 서비스입니다.
 
-In the project directory, you can run:
+현재 배달 어플의 침체기가 지속되는 가운데 가장 큰 문제점으로 지목되었던 **배달비를 줄일 수 있는 방법**이 무엇이 있을까 라는 고민으로부터 시작되어 현재 프로젝트를 기획하게 되었습니다.
 
-### `npm start`
+방을 만들어 배송지와 매장을 정한 뒤 각각 메뉴를 주문하고 배송지에서 수령을 하는 시스템입니다.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+n명의 사용자로 구성된 방에선 **배달비/n 으로 절약**이 가능하며
+일부매장에선 일정금액 이상 **배달비 무료의 해택**도 받을 것으로 기대됩니다.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+또한 **사장님 페이지**도 구현하였으며 사장님 페이지에선 매장관리, 메뉴관리 등 **사용자 페이지와 연동**이 되도록 구현하였습니다.
 
-### `npm test`
+## flowchart
+[https://whimsical.com/flowchart-VfL4RMcQhajrgq5sbYKFxG](https://whimsical.com/flowchart-VfL4RMcQhajrgq5sbYKFxG)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Figma
+[https://www.figma.com/file/T4thtznnaRBJWAlE2TQbxV/%EB%A9%94%EC%9D%B8%ED%99%94%EB%A9%B4](https://www.figma.com/file/T4thtznnaRBJWAlE2TQbxV/%EB%A9%94%EC%9D%B8%ED%99%94%EB%A9%B4)
 
-### `npm run build`
+## 💁 팀원
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+`프론트`  임동민(프로젝트 전체 프론트 담당)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+`백엔드`  정진묵(프로젝트 전체 백엔드 담당)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+`배포`  박병남(프로젝트 전체 DevOps 담당)
 
-### `npm run eject`
+## ✍🏼 기술 스택
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+- View (React with TypeScript, React-Router)
+- CSS 프레임 워크, 스타일링 (BootStrap, Styled-components)
+- Build Tool (Create React App)
+- Code Quality Tool (ESLint, Prettier)
+- 배포 상태 관리 (x, 추후 배포 예정)
+- 협업 도구 (git, Jira, gather)
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## 💡 프로젝트 기능
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+- 구매비용 절감을 위해 비슷한 구역에서 주문하는 사용자끼리 **배달비/n**를 할 수 있는 아이디어를 바탕으로 기획을 시작했습니다.
+- **소셜로그인** `Kakao` `Naver` 을 통해 사용자들이 간단하게 회원가입을 할 수 있도록 구현하였습니다.
+- 공동구매 뿐 아니라 **혼자구매** 기능도 구현했습니다.
+- **채팅방 기능**을 통해 공동구매 회원끼리 소통을 가능하게끔 하였습니다. (`websocket` 사용)
+- **사장님 페이지**를 구현하여 매장 추가와 메뉴, 매장소개, 사장님한마디 등을 적을 수 있도록 구현하였습니다.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## ❓프로젝트 추진 이유
 
-## Learn More
+- 항상 제가 가지고 있던 기발한 아이디어를 구현해보고 싶었습니다. 주변 친구 2명이 공교롭게도 **백엔드**와 **배포** 개발자로 공부중에 있어서 공모전을 활용하여 프로젝트를 진행해보았습니다.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## ✏️ 프로젝트를 통해 느낀점
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- 해당 서비스 개발을 통해 **소셜로그인**의 과정을 공부하며 이해하게 되었습니다.
+- 채팅기능을 구현하면서 **웹소켓**에 대해 공부하게 되었습니다. 웹소켓을 적용할 때 백엔드와의 통신 부분에서 **채팅방 접속인원** 기능을 구현해야 했었는데 **onopen**이 원하는 페이지에서만 작동해야하고, 페이지 이탈 시 **onclose**가 원활하게 작동하지 않아서 많은 버그 픽스를 했던 기억이 있습니다.
+
+## 🔰 아쉬운점
+
+- TypeScript를 처음 사용한 프로젝트이다보니 타입 지정에 관해서 많은 any의 사용이 존재합니다. 현재 리펙토링을 준비중에 있고 이 과정을 거치면서 타입스크립트의 장점을 살려보려 노력해보려 합니다.
+- 무한스크롤을 시도해보려 했지만 공모전의 특성상 제출일이 촉박하여 끝내 구현하지 못하고 제출하였습니다. 이 역시 리펙토링을 거치면서 추가하고싶은 기능 중 하나입니다.
+
+## 📜 프로젝트 페이지
+
+### 크게 사용자 / 사장님 페이지로 구분
+
+## 사용자
+
+### 로그인
+
+- 카카오로 로그인 (소셜 로그인)
+- 네이버로 로그인 (소셜 로그인) - 현재 검수단계를 거치지 않아 관리자 외 로그인 불가능
+- 회원가입 시 **다음 우편번호API**를 활용하여 주소입력
+- 세션 스토리지 이용 (JWT 기반)
+
+### 로그인 이후
+
+**메인 페이지**
+
+- 상단 마감 임박 모집방 리스트
+- 모집중인 공동구매 목록 / 음식점 찾기 탭
+- 하단 목록 / 음식점 카드 리스트
+- 카드 리스트 정렬 기능(음식종류)
+
+**음식점 주문페이지**
+
+- 사장님 한마디(사장님 페이지와 연동)
+- 음식점 소개
+- 리뷰(더보기 기능)
+- 방 생성자 경우 방 옵션 변경 탭
+- 같은 음식점 다른 구매방 리스트
+- 메뉴 리스트
+- 장바구니 리스트
+
+**결제 페이지**
+
+- 추후 결제API 연동을 위해 작업
+- 주문한 메뉴 리스트
+- 결제 금액 화면 구현
+
+**주문 완료 페이지**
+
+- 배송지 위치 카카오 지도 API를 활용하여 표시
+
+**채팅방 페이지**
+
+- 공동구매가 이루어진 사용자들 끼리 방이 생성되어 채팅가능
+- 배달 완료 시 리뷰를 남길 수 있는 링크가 메세지로 오게 됨
+- 리뷰 작성 시 사진 첨부 가능
+
+**마이페이지**
+
+- 내가 쓴 리뷰 관리
+- 내 주문내역 리스트
+
+## 사장님
+
+**로그인 페이지**
+
+- 로컬 로그인으로 진행(JWT 사용)
+- 회원가입 시 음식점 정보 입력(업태, 매장이름, 지점, 주소)
+
+**메인페이지**
+
+- **접수대기** / **접수완료** / **배달중** 으로 구분하여 사용자에게 현재 주문 상태를 알 수 있게끔 사용자 페이지와 연동
+
+**매장관리**
+
+- 공지, 한마디, 원산지 정보 등을 수정할 수 있는 페이지(사용자 페이지와 연동)
+
+**메뉴관리**
+
+- 그룹(치킨, 사이드, 음료, 주류와 같은 그룹) / 메뉴 CRUD(GET/POST/UPDATE/DELETE)
+- 메뉴 추가 시 formdata를 활용하여 사진을 포함하여 백엔드로 POST
